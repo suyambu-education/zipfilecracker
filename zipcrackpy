@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+import sys
+from argparse import ArgumentParser,FileType
+import zipfile
+from threading import Thread
+
+#color Class
+class Colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    RED='\033[31m'
+# Banner Class 
+class Banner:
+    zipcrackBaner = """{}
+              ___ ____ ____ ____ ____ ____ ____ ____ ____ ____ 
+            ||z |||i |||p |||C |||r |||a |||c |||k |||e |||r ||
+            ||__|||__|||__|||__|||__|||__|||__|||__|||__|||__||
+            |/__\|/__\|/__\|/__\|/__\|/__\|/__\|/__\|/__\|/__\|
+            
+                                    by Suyambu Education
+                                    (c) 2018 @psk!n9  
+                                    VERSION : {}{}
+
+    """.format(Colors.RED,"V 0.1~",Colors.ENDC)
+#================================================< File Extractor >============================================================
+def extract_zip(zfile,password): # file extractor method
+    try:
+        zfile.extractall(pwd=password)
+        print "[+] password Found ! :"+password
+    except:
+        pass
+
+def main(): #main Function (or) Method
+    print Banner.zipcrackBaner
+    parser = ArgumentParser()
+    usage = "Argument -f <zip file name> -d <dictonary name>"
+    parser.add_argument("-f",dest='zname',help="<zip file location> example \" /root/Desktop/protect.zip \"")
+    parser.add_argument("-d",dest='dname',help="<dictonary  location> example \" /root/Desktop/protect.txt (or) * \"")
+    args = parser.parse_args()
+    if(args.zname == None) | (args.dname == None):
+        print usage
+        if(args.zname == None):
+            print "[-] Error on Zip File ~ [argument] -f <zip file path.zip> "
+        if(args.dname == None):
+            print "[-] Error on Dictonary File ~ [argument] -d <path of dictonary.txt>"
+    else:
+        zname = args.zname
+        dname = args.dname
+
+        zFile = zipfile.ZipFile(zname)
+        passFile = open(dname)
+        
+        for line in passFile.readlines():
+            password = line.strip('\n')
+            t = Thread(target=extract_zip,args=(zFile,password))
+            t.start()
+
+if __name__ == '__main__':
+    main()
+    
