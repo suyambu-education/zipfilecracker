@@ -14,4 +14,4 @@
 
 <a href="https://www.youtube/c/SuyambuComputerEducation">Suyambu Compter Education </a>
 
-<a href="http://deve.suyambusoftware.com/">Test </a>
+<a href="http://deve.suyambusoftware.com/" target="_blank">Test </a>
